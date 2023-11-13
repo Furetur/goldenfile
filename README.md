@@ -2,6 +2,18 @@
 
 > A framework for golden-file testing
 
+## Описание
+
+Golden file тестирование --- метод (обычно сквозного) тестирования, при котором выход программы проверяется на совпадение с эталонным "золотым" выводом (goldenfile).
+
+Данный вид тестирования очень актуален при разработке компиляторов, трансляторов, интерпретаторов или любых анализаторов и преобразователей исходного кода. Он позволяет полуавтоматически покрывать тестами важную логику программы, не залезая в ее внутренности. Таким образом, данные тесты не являются мертвым грузом при рефакторинге. 
+
+Текущие инструмента либо реализованы для конкретного языка программирования(https://pkg.go.dev/gotest.tools/v3/golden, https://github.com/sebdah/goldie), либо имеют удобный интерфейс запуска, но больше не поддерживаются (https://github.com/aiiie/cram). Никакой инструмент, из тех которых я знаю, не поддерживает голден директории.
+
+Пользоваться таким инструментом должно быть довольно просто. На диске (в папке tests) хранятся файлы со входными данными и для каждого такого файла хранится эталонный goldenfile. Инструмент запускает тестируемую программу (допустим, интерпретатор), передавая ей каждый файл со входными данными и сверает выход (результат интерпретации) с голден файлом.
+
+## Requirements
+
 _Program_ - the program under test
 
 **UI requirements**
@@ -48,3 +60,45 @@ _Program_ - the program under test
     * Defines additional options
     * Users can define their own config formats with the Python API
         * Users can choose to lower their config formats into our config format
+
+* mode: stdout stderr filesystem
+
+000_test/000_test.fileoutput
+
+(temppath) -> compiler.exe -o {temppath}
+
+----------------------
+Design
+
+Test:
+    name
+    tags
+    input
+    golden_stdout
+    golden_stderr
+    golden_file_output
+
+Result = (Test, TestOutput)
+
+TestOutput:
+    actual_stdout
+    actual_stderr
+    actual_file_output
+
+Pipeline:: () -> unit = TestDiscovery |> Runner |> List[Exporter]
+
+Framework.run(pipelines: List[Pipeline])
+
+Test Discovery:: ((testtags: List[tag]) -> bool) -> List[Test]
+Runner:: (List[Test]) -> List[Result]
+Exporter:: List[Result] -> unit
+
+
+1. Comparison API
+2. Test Discovery
+3. Runner
+4. UpdateExporter
+5. DiffExporter
+
+
+* BeforeAll, AfterAll, BeforeEach, AfterEach
