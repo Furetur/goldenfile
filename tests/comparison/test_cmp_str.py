@@ -51,7 +51,7 @@ def test_simple_compare_multiline_strings() -> None:
 
 def test_advanced_compare_multiline_strings() -> None:
     def lines_cmp(lhs: str, rhs: str) -> bool:
-        return len(lhs.split()) >= len(rhs.split())
+        return len(lhs.splitlines()) >= len(rhs.splitlines())
 
     lhs: str = dedent(
         """\
