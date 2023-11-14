@@ -37,10 +37,10 @@ def diff_str(lhs: str, rhs: str) -> str:
 
 
 def cmp_file(lhs: Path, rhs: Path):
-    if lhs.is_file():
+    if not lhs.is_file():
         raise GoldenfileError(f"Incorrect file: {lhs}")
 
-    if rhs.is_file():
-        raise GoldenfileError(f"Incorrect file: {lhs}")
+    if not rhs.is_file():
+        raise GoldenfileError(f"Incorrect file: {rhs}")
 
     return cmp(lhs, rhs, shallow=False)
