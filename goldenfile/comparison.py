@@ -63,3 +63,11 @@ def diff_file(lhs: Path, rhs: Path) -> str:
     )
 
     return "\n".join(difference)
+
+
+def cmp_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
+    raise NotImplementedError()
+
+
+def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
+    raise NotImplementedError()
