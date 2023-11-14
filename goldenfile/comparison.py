@@ -102,4 +102,5 @@ def cmp_dir(lhs: Path, rhs: Path, *, shallow: bool = True) -> bool:
 
 
 def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
+    # TODO: Implement function to show the difference between two directories.
     raise NotImplementedError()
