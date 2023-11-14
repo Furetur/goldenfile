@@ -89,7 +89,7 @@ def cmp_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
     if not rhs.is_dir():
         raise GoldenfileError(f"Incorrect directory: {rhs}")
 
-    # NOTE: Recursively traversing all subfoldres of a target directories
+    # NOTE: Recursively traversing all subdirectories of a target directories
     #       and compare them.
     if not shallow:
         return _cmp_dir(lhs, rhs)
