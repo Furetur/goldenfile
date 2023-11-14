@@ -12,7 +12,7 @@ from goldenfile.exception import GoldenfileError
 def setup_success_identical(tmp_path):
     @contextmanager
     def context_manager():
-        # First folder structure:
+        # First directory structure:
         # first/
         #   sample.py
         #   subfolder/
@@ -36,7 +36,7 @@ def setup_success_identical(tmp_path):
 
         Path(first_subfolder, "subfolder-sample").touch()
 
-        # Second folder structure:
+        # Second directory structure:
         # second/
         #   sample.py
         #   subfolder/
@@ -83,7 +83,7 @@ def test_success_identical_deep(
 def setup_success_file_difference(tmp_path):
     @contextmanager
     def context_manager():
-        # First folder structure:
+        # First directory structure:
         # first/
         #   sample.py
         #   subfolder/
@@ -107,7 +107,7 @@ def setup_success_file_difference(tmp_path):
 
         Path(first_subfolder, "subfolder-sample").touch()
 
-        # Second folder structure:
+        # Second directory structure:
         # second/
         #   sample.py
         #   subfolder/
@@ -147,7 +147,7 @@ def test_success_file_difference(
 def setup_success_structure_difference(tmp_path):
     @contextmanager
     def context_manager():
-        # First folder structure:
+        # First directory structure:
         # first/
         #   sample.py
 
@@ -164,7 +164,7 @@ def setup_success_structure_difference(tmp_path):
             encoding="utf-8",
         )
 
-        # Second folder structure:
+        # Second directory structure:
         # second/
         #   sample.py
         #   subfolder/
@@ -204,7 +204,7 @@ def test_success_structure_difference(
 def setup_success_difference_shallow_and_deep(tmp_path):
     @contextmanager
     def context_manager():
-        # First folder structure:
+        # First directory structure:
         # first/
         #   sample.py
         #   subfolder/
@@ -236,7 +236,7 @@ def setup_success_difference_shallow_and_deep(tmp_path):
             encoding="utf-8",
         )
 
-        # Second folder structure:
+        # Second directory structure:
         # second/
         #   sample.py
         #   subfolder/
