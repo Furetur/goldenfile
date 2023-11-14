@@ -15,9 +15,9 @@ from goldenfile.model import (
 
 def has_no_golden_files(test: Test) -> bool:
     return (
-        test.golden_generated_file is None
-        and test.golden_stderr is None
-        and test.golden_stdout is None
+            test.golden_generated_file is None
+            and test.golden_stderr is None
+            and test.golden_stdout is None
     )
 
 

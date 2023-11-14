@@ -6,6 +6,7 @@ from goldenfile.constants import CONFIG_SUFFIX, GENERATED_FILE_SUFFIX, INPUT_SUF
 
 from goldenfile.model import Tag, Test
 
+
 def read_test(test_dir: Path) -> Test:
     test_name = test_dir.stem
 
@@ -13,10 +14,10 @@ def read_test(test_dir: Path) -> Test:
         with open(test_dir / (test_name + CONFIG_SUFFIX)) as file:
             return yaml.safe_load(file)["tags"]
 
-    def get_file(suffix: str) -> Optional[Path]:
+    def get_file(suffix: str) -> Path:
         matching_files = [p for p in test_dir.iterdir() if suffix in p.suffixes]
         if len(matching_files) == 0:
-            return None
+            raise FileNotFoundError(f"No matched files by suffix {suffix}")
         else:
             return matching_files[0]
 
@@ -29,6 +30,7 @@ def read_test(test_dir: Path) -> Test:
         golden_stderr=get_file(STDERR_SUFFIX),
         golden_generated_file=get_file(GENERATED_FILE_SUFFIX)
     )
+
 
 def simple_discoverer(test_suite_dir: Path) -> Sequence[Test]:
     test_dirs = (p for p in test_suite_dir.iterdir() if p.is_dir())

@@ -8,8 +8,8 @@ from goldenfile.test_discoverers.simple_discoverer import simple_discoverer
 from goldenfile.pipeline import Pipeline
 
 class Python3ShellCommand(ShellCommand):
-    def make_command(self, *, input: Path, output: Path) -> Sequence[str]:
-        return ["python3", str(input)]
+    def make_command(self, *, input_path: Path, output: Path) -> Sequence[str]:
+        return ["python3", str(input_path)]
 
 pipeline = Pipeline(
     test_discoverer=simple_discoverer,

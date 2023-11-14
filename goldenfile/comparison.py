@@ -1,6 +1,5 @@
 """comparison -- module that provides ability to compare strings, files and directories."""
 
-
 from typing import Callable, Any, Iterator
 from difflib import context_diff, unified_diff
 from filecmp import cmp, dircmp
@@ -14,10 +13,10 @@ def _default_str_comparator(lhs: str, rhs: str) -> bool:
 
 
 def cmp_str(
-    lhs: str,
-    rhs: str,
-    *,
-    comparator: Callable[[str, str], Any] = _default_str_comparator,
+        lhs: str,
+        rhs: str,
+        *,
+        comparator: Callable[[str, str], Any] = _default_str_comparator,
 ) -> Any:
     return comparator(lhs, rhs)
 
