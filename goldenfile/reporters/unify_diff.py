@@ -30,18 +30,7 @@ class UnifyDiffReporter(BaseReporter):
                     print(diff, file=open(str(diff_path), "w"))
                     print(f"See diff at {diff_path}")
 
-        for t in result.failed:
-            print_failed_tests_diff(t)
-
-        for t in result.passed:
-            cprint(f"Test \"{t.test.name}\" passed.", color='green')
-
-        for t in result.skipped:
-            cprint(f"Test \"{t.test.name}\" skipped.", color='yellow')
-
-        passed_str = colored(f"PASSED {len(result.passed)}", color='green')
-        failed_str = colored(f"FAILED {len(result.failed)}", color='red')
-        skipped_str = colored(f"SKIPPED {len(result.skipped)}", color='yellow')
-        cprint(
-            f"\nSummary: {passed_str} {failed_str} {skipped_str}",
-        )
+        UnifyDiffReporter.print_passed_tests_colored(result)
+        UnifyDiffReporter.print_skipped_tests_colored(result)
+        UnifyDiffReporter.print_failed_tests_colored(result)
+        UnifyDiffReporter.print_summary_colored(result)
