@@ -2,20 +2,15 @@ from pathlib import Path
 from typing import Callable, Sequence, Optional
 from dataclasses import dataclass
 import yaml
+from goldenfile.constants import CONFIG_SUFFIX, GENERATED_FILE_SUFFIX, INPUT_SUFFIX, STDERR_SUFFIX, STDOUT_SUFFIX
 
-from goldenfile.types import Tag, TagFilter, Test
-
-INPUT_SUFFIX = ".input"
-STDOUT_SUFFIX = ".stdout"
-STDERR_SUFFIX = ".stderr"
-GENERATED_FILE_SUFFIX = ".gen"
-
+from goldenfile.model import Tag, Test
 
 def read_test(test_dir: Path) -> Test:
     test_name = test_dir.stem
 
     def read_tags() -> Sequence[Tag]:
-        with open(test_dir / (test_name + ".config.yaml")) as file:
+        with open(test_dir / (test_name + CONFIG_SUFFIX)) as file:
             return yaml.safe_load(file)["tags"]
 
     def get_file(suffix: str) -> Optional[Path]:
@@ -34,7 +29,6 @@ def read_test(test_dir: Path) -> Test:
         golden_generated_file=get_file(GENERATED_FILE_SUFFIX)
     )
 
-def discover(test_suite_dir: Path, tag_filter: TagFilter = lambda _: True) -> Sequence[Test]:
+def simple_discoverer(test_suite_dir: Path) -> Sequence[Test]:
     test_dirs = (p for p in test_suite_dir.iterdir() if p.is_dir())
-    tests = (read_test(test_dir) for test_dir in test_dirs)
-    return [t for t in tests if tag_filter(t.tags)]
+    return [read_test(test_dir) for test_dir in test_dirs]
