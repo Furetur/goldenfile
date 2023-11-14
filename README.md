@@ -6,7 +6,7 @@
 
 Golden file тестирование --- метод (обычно сквозного) тестирования, при котором выход программы проверяется на совпадение с эталонным "золотым" выводом (goldenfile).
 
-Данный вид тестирования очень актуален при разработке компиляторов, трансляторов, интерпретаторов или любых анализаторов и преобразователей исходного кода. Он позволяет полуавтоматически покрывать тестами важную логику программы, не залезая в ее внутренности. Таким образом, данные тесты не являются мертвым грузом при рефакторинге. 
+Данный вид тестирования очень актуален при разработке компиляторов, трансляторов, интерпретаторов или любых анализаторов и преобразователей исходного кода. Он позволяет полуавтоматически покрывать тестами важную логику программы, не залезая в ее внутренности. Таким образом, данные тесты не являются мертвым грузом при рефакторинге.
 
 Текущие инструмента либо реализованы для конкретного языка программирования(https://pkg.go.dev/gotest.tools/v3/golden, https://github.com/sebdah/goldie), либо имеют удобный интерфейс запуска, но больше не поддерживаются (https://github.com/aiiie/cram). Никакой инструмент, из тех которых я знаю, не поддерживает голден директории.
 
@@ -93,12 +93,38 @@ Test Discovery:: ((testtags: List[tag]) -> bool) -> List[Test]
 Runner:: (List[Test]) -> List[Result]
 Exporter:: List[Result] -> unit
 
-
 1. Comparison API
 2. Test Discovery
 3. Runner
 4. UpdateExporter
 5. DiffExporter
 
-
 * BeforeAll, AfterAll, BeforeEach, AfterEach
+
+## Dependencies
+
+* [pyenv](https://github.com/pyenv/pyenv)
+* [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
+
+## Toolchain
+
+Installation:
+
+```shell
+pyenv install 3.11
+pyenv local 3.11
+poetry env use $(pyenv which python)
+poetry install
+```
+
+Enter into Poetry virtual environment:
+
+```shell
+poetry shell
+```
+
+## Tests
+
+```shell
+pytest
+```
