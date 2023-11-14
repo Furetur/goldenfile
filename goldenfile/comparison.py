@@ -82,7 +82,7 @@ def _cmp_dir(lhs: Path, rhs: Path) -> bool:
     return True
 
 
-def cmp_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
+def cmp_dir(lhs: Path, rhs: Path, *, shallow: bool = True) -> bool:
     if not lhs.is_dir():
         raise GoldenfileError(f"Incorrect directory: {lhs}")
 
