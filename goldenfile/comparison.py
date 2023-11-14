@@ -36,7 +36,7 @@ def diff_str(lhs: str, rhs: str) -> str:
     return "\n".join(context_diff(lhs, rhs, fromfile="expect", tofile="actual"))
 
 
-def cmp_file(lhs: Path, rhs: Path):
+def cmp_file(lhs: Path, rhs: Path) -> bool:
     if not lhs.is_file():
         raise GoldenfileError(f"Incorrect file: {lhs}")
 
