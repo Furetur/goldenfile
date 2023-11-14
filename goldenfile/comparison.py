@@ -60,6 +60,8 @@ def diff_file(lhs: Path, rhs: Path) -> str:
         lhs_content.splitlines(),
         rhs_content.splitlines(),
         lineterm="",
+        fromfile=str(lhs),
+        tofile=str(rhs),
     )
 
     return "\n".join(difference)

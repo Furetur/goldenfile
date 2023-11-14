@@ -87,14 +87,15 @@ def setup_success_different(tmp_path):
 
 def test_success_different(
     setup_success_different,  # pylint: disable=redefined-outer-name
+    tmp_path,
 ) -> None:
     with setup_success_different() as (first, second):
         actual: str = diff_file(first, second)
 
     expect: str = dedent(
-        """\
-        --- 
-        +++ 
+        f"""\
+        --- {tmp_path}/first
+        +++ {tmp_path}/second
         @@ -1,4 +1,3 @@
          first
         +third
