@@ -4,13 +4,13 @@ from typing import Sequence
 
 from goldenfile.model import (
     Checker,
-    Reporter,
     Runner,
     TagFilter,
     Test,
     TestDiscoverer,
     TestSuiteExecutionResult,
 )
+from goldenfile.reporters.base_reporter import BaseReporter
 
 
 def has_no_golden_files(test: Test) -> bool:
@@ -26,7 +26,7 @@ class Pipeline:
     test_discoverer: TestDiscoverer
     runner: Runner
     checker: Checker
-    reporters: Sequence[Reporter]
+    reporters: Sequence[BaseReporter]
     tag_filter: TagFilter = lambda _: True
 
     def run(self, test_suite_dir: Path) -> None:
@@ -44,4 +44,4 @@ class Pipeline:
             skipped=sorted(skipped_tests, key=lambda t: t.test.name)
         )
         for reporter in self.reporters:
-            reporter(result)
+            reporter.show_diff(result)

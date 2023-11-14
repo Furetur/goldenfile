@@ -43,4 +43,3 @@ Runner = Callable[[Sequence[Test]], Sequence[ExecutedTest]]
 
 Checker = Callable[[ExecutedTest], bool]
 
-Reporter = Callable[[TestSuiteExecutionResult], None]

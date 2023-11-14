@@ -14,10 +14,10 @@ def read_test(test_dir: Path) -> Test:
         with open(test_dir / (test_name + CONFIG_SUFFIX)) as file:
             return yaml.safe_load(file)["tags"]
 
-    def get_file(suffix: str) -> Path:
+    def get_file(suffix: str) -> Optional[Path]:
         matching_files = [p for p in test_dir.iterdir() if suffix in p.suffixes]
         if len(matching_files) == 0:
-            raise FileNotFoundError(f"No matched files by suffix {suffix}")
+            return None
         else:
             return matching_files[0]
 
