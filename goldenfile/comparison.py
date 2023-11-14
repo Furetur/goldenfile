@@ -95,7 +95,10 @@ def cmp_dir(lhs: Path, rhs: Path, *, shallow: bool = True) -> bool:
         return _cmp_dir(lhs, rhs)
 
     difference: dircmp = dircmp(lhs, rhs)
-    return difference.left_only or difference.right_only or difference.diff_files
+    difference_len = len(
+        difference.left_only or difference.right_only or difference.diff_files
+    )
+    return difference_len == 0
 
 
 def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
