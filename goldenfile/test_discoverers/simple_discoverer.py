@@ -23,6 +23,7 @@ def read_test(test_dir: Path) -> Test:
     return Test(
         name=test_name,
         tags=read_tags(),
+        # TODO: this allows input to be none, however it is not possible
         input=get_file(INPUT_SUFFIX),
         golden_stdout=get_file(STDOUT_SUFFIX),
         golden_stderr=get_file(STDERR_SUFFIX),
