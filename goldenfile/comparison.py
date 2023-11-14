@@ -1,8 +1,8 @@
 """comparison -- module that provides ability to compare strings, files and directories."""
 
 
-from typing import Callable, Any
-from difflib import context_diff
+from typing import Callable, Any, Iterator
+from difflib import context_diff, unified_diff
 from filecmp import cmp
 from pathlib import Path
 
@@ -44,3 +44,22 @@ def cmp_file(lhs: Path, rhs: Path):
         raise GoldenfileError(f"Incorrect file: {rhs}")
 
     return cmp(lhs, rhs, shallow=False)
+
+
+def diff_file(lhs: Path, rhs: Path) -> str:
+    if not lhs.is_file():
+        raise GoldenfileError(f"Incorrect file: {lhs}")
+
+    if not rhs.is_file():
+        raise GoldenfileError(f"Incorrect file: {rhs}")
+
+    lhs_content: str = lhs.read_text(encoding="utf-8")
+    rhs_content: str = rhs.read_text(encoding="utf-8")
+
+    difference: Iterator[str] = unified_diff(
+        lhs_content.splitlines(),
+        rhs_content.splitlines(),
+        lineterm="",
+    )
+
+    return "\n".join(difference)
