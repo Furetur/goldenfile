@@ -19,29 +19,22 @@ class UnifyDiffReporter(BaseReporter):
                 # TODO
                 # ("generated file", test.test.golden_generated_file, test.output.actual_generated_file),
             ]
-
+            # print(f"=== {test.test.name}")
             for name, golden, actual in checks:
                 if golden is None:
                     continue
                 if not cmp_file(golden, actual):
-                    cprint(f"Test \"{test.test.name}\" failed. ", color='red', end='')
+                    cprint(f"Test \"{test.test.name}\" failed", color='red')
                     diff = diff_file(golden, actual)
                     diff_path = pathlib.Path(actual).parent / f"{test.test.name}.diff"
                     print(diff, file=open(str(diff_path), "w"))
-                    print(f"See diff at {diff_path}")
+                    print(f"See diff at {diff_path}\n")
 
         for t in result.failed:
             print_failed_tests_diff(t)
-
-        for t in result.passed:
-            cprint(f"Test \"{t.test.name}\" passed.", color='green')
-
-        for t in result.skipped:
-            cprint(f"Test \"{t.test.name}\" skipped.", color='yellow')
-
         passed_str = colored(f"PASSED {len(result.passed)}", color='green')
         failed_str = colored(f"FAILED {len(result.failed)}", color='red')
         skipped_str = colored(f"SKIPPED {len(result.skipped)}", color='yellow')
         cprint(
-            f"\nSummary: {passed_str} {failed_str} {skipped_str}",
+            f"Summary: {passed_str} {failed_str} {skipped_str}",
         )
