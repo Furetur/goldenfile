@@ -28,8 +28,19 @@ class ExecutedTest:
     test: Test
     output: TestOutput
 
+
+# TODO: these names bruh
+@dataclass(frozen=True)
+class TestSuiteExecutionResult:
+    passed: Sequence[ExecutedTest]
+    failed: Sequence[ExecutedTest]
+    skipped: Sequence[ExecutedTest]
+
+
 TestDiscoverer = Callable[[Path], Sequence[Test]]
 
 Runner = Callable[[Sequence[Test]], Sequence[ExecutedTest]]
 
-Reporter = Callable[[Sequence[ExecutedTest]], None]
+Checker = Callable[[ExecutedTest], bool]
+
+Reporter = Callable[[TestSuiteExecutionResult], None]
