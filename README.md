@@ -145,7 +145,6 @@ Building the distribution package:
 
 ```shell
 poetry build
-python3 -m pip install ./dist/goldenfile-<version>
 ```
 
 Built distribution is located in the file: `dist/goldenfile-${version}-py3-none-any.whl`,
