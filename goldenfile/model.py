@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from gc import callbacks
 from pathlib import Path
 from typing import Callable, Optional, Sequence
 
@@ -43,3 +44,4 @@ Runner = Callable[[Sequence[Test]], Sequence[ExecutedTest]]
 
 Checker = Callable[[ExecutedTest], bool]
 
+Reporter = Callable[[TestSuiteExecutionResult], None]

@@ -36,12 +36,15 @@ class HtmlDiffReporter(BaseReporter):
         for t in result.failed:
             res = print_failed_tests_diff(t)
             checks_results.append((t.test.name, res))
-        for (t, diffs) in checks_results:
+        for t, diffs in checks_results:
             result_html += f"<h2>{t}</h2>"
             for d in diffs:
                 result_html += d
 
-        print(_HTML_HEADER + result_html + _HTML_BOTTOM, file=open("failed_tests_diffs.html", "w"))
+        print(
+            _HTML_HEADER + result_html + _HTML_BOTTOM,
+            file=open("failed_tests_diffs.html", "w"),
+        )
         # HtmlDiffReporter.print_passed_tests_colored(result)
         # HtmlDiffReporter.print_skipped_tests_colored(result)
         # HtmlDiffReporter.print_failed_tests_colored(result)
@@ -67,14 +70,17 @@ class HtmlDiffReporter(BaseReporter):
             # wrapcolumn=40,
         )
 
-        return difference.make_table(fromlines=golden_content.splitlines(),
-                                     tolines=actual_content.splitlines(),
-                                     fromdesc=f"Expected {golden_path}",
-                                     todesc=f"Actual {actual_path}",
-                                     context=True,
-                                     # numlines=5,
-                                     )
+        return difference.make_table(
+            fromlines=golden_content.splitlines(),
+            tolines=actual_content.splitlines(),
+            fromdesc=f"Expected {golden_path}",
+            todesc=f"Actual {actual_path}",
+            context=True,
+            # numlines=5,
+        )
 
+
+html_diff_reporter = HtmlDiffReporter.show_diff
 
 
 _HTML_HEADER = """

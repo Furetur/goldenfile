@@ -4,6 +4,7 @@ from typing import Sequence
 
 from goldenfile.model import (
     Checker,
+    Reporter,
     Runner,
     TagFilter,
     Test,
@@ -26,7 +27,7 @@ class Pipeline:
     test_discoverer: TestDiscoverer
     runner: Runner
     checker: Checker
-    reporters: Sequence[BaseReporter]
+    reporters: Sequence[Reporter]
     tag_filter: TagFilter = lambda _: True
 
     def run(self, test_suite_dir: Path) -> None:
@@ -44,4 +45,4 @@ class Pipeline:
             skipped=sorted(skipped_tests, key=lambda t: t.test.name)
         )
         for reporter in self.reporters:
-            reporter.show_diff(result)
+            reporter(result)

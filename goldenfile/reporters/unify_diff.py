@@ -9,7 +9,6 @@ from termcolor import cprint, colored
 
 
 class UnifyDiffReporter(BaseReporter):
-
     @staticmethod
     def show_diff(result: TestSuiteExecutionResult) -> None:
         def print_failed_tests_diff(test: ExecutedTest) -> None:
@@ -24,7 +23,7 @@ class UnifyDiffReporter(BaseReporter):
                 if golden is None:
                     continue
                 if not cmp_file(golden, actual):
-                    cprint(f"Test \"{test.test.name}\" failed. ", color='red', end='')
+                    cprint(f'Test "{test.test.name}" failed. ', color="red", end="")
                     diff = diff_file(golden, actual)
                     diff_path = pathlib.Path(actual).parent / f"{test.test.name}.diff"
                     print(diff, file=open(str(diff_path), "w"))
@@ -34,3 +33,6 @@ class UnifyDiffReporter(BaseReporter):
         UnifyDiffReporter.print_skipped_tests_colored(result)
         UnifyDiffReporter.print_failed_tests_colored(result)
         UnifyDiffReporter.print_summary_colored(result)
+
+
+unify_diff_reporter = UnifyDiffReporter.show_diff
