@@ -6,7 +6,7 @@ from typing import Callable, Sequence
 from goldenfile.constants import GENERATED_FILE_SUFFIX, STDERR_SUFFIX, STDOUT_SUFFIX
 from goldenfile.model import ExecutedTest, Runner, Test, TestOutput
 
-TMP_DIR = Path("temp")
+TMP_DIR = Path(".temp")
 
 
 class ShellCommand(ABC):

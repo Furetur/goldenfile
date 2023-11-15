@@ -30,7 +30,7 @@ python_pipeline = Pipeline(
     reporters=[
         UnifyDiffReporter,
         HtmlDiffReporter,
-        save_report(Path("temp/report.json")),
+        save_report(Path(".temp/report.json")),
     ]
     + should_replace,
 )
