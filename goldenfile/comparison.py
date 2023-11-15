@@ -101,6 +101,90 @@ def cmp_dir(lhs: Path, rhs: Path, *, shallow: bool = True) -> bool:
     return difference_len == 0
 
 
-def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> bool:
-    # TODO: Implement function to show the difference between two directories.
-    raise NotImplementedError()
+def _diff_dir(lhs: Path, rhs: Path) -> bool:
+    difference: dircmp = dircmp(lhs, rhs)
+
+    if difference.left_only or difference.right_only or difference.diff_files:
+        return False
+
+    for subdir in difference.common_dirs:
+        lhs_subdir: Path = Path(lhs, subdir)
+        rhs_subdir: Path = Path(rhs, subdir)
+        if not _cmp_dir(lhs_subdir, rhs_subdir):
+            return False
+
+    return True
+
+
+class DifferenceDirecoriesFilesStorage:
+    def __init__(self):
+        self.left_only: list[Path] = []
+        self.right_only: list[Path] = []
+        self.diff_files: list[Path] = []
+
+    def append(self, lhs: Path, rhs: Path) -> None:
+        difference: dircmp = dircmp(lhs, rhs)
+
+        if difference.left_only:
+            left_only = [Path(lhs, item) for item in difference.left_only]
+            self.left_only.extend(left_only)
+
+        if difference.right_only:
+            right_only = [Path(rhs, item) for item in difference.right_only]
+            self.right_only.extend(right_only)
+
+        if difference.diff_files:
+            files = [
+                (Path(lhs, item), Path(rhs, item)) for item in difference.diff_files
+            ]
+            self.diff_files.extend(files)
+
+    def __str__(self) -> str:
+        output: str = ""
+
+        for left_only_file in self.left_only:
+            output += f"-{left_only_file}\n"
+
+        for right_only_file in self.right_only:
+            output += f"+{right_only_file}\n"
+
+        output += "\n"
+
+        for lhs_file, rhs_file in self.diff_files:
+            output += f"{diff_file(lhs_file, rhs_file)}\n\n"
+
+        # NOTE: Remove extra newline
+        output = output.rsplit("\n", 1)[0]
+        return output
+
+
+def _diff_dir(
+    lhs: Path,
+    rhs: Path,
+    diff_files: DifferenceDirecoriesFilesStorage = DifferenceDirecoriesFilesStorage(),
+) -> None:
+    diff_files.append(lhs, rhs)
+    for subdir in dircmp(lhs, rhs).common_dirs:
+        lhs_subdir: Path = Path(lhs, subdir)
+        rhs_subdir: Path = Path(rhs, subdir)
+        _diff_dir(lhs_subdir, rhs_subdir, diff_files)
+
+
+def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> str:
+    if not lhs.is_dir():
+        raise GoldenfileError(f"Incorrect directory: {lhs}")
+
+    if not rhs.is_dir():
+        raise GoldenfileError(f"Incorrect directory: {rhs}")
+
+    diff_files = DifferenceDirecoriesFilesStorage()
+
+    if cmp_dir(lhs, rhs, shallow=shallow):
+        return diff_files
+
+    if not shallow:
+        _diff_dir(lhs, rhs, diff_files)
+    else:
+        diff_files.append(lhs, rhs)
+
+    return str(diff_files)
