@@ -130,3 +130,29 @@ poetry shell
 ```shell
 pytest
 ```
+
+## Installation
+
+### Git repository
+
+```shell
+python3 -m pip install "git+https://github.com/Furetur/goldenfile.git"
+```
+
+### Local distribution
+
+Building the distribution package:
+
+```shell
+poetry build
+python3 -m pip install ./dist/goldenfile-<version>
+```
+
+Built distribution is located in the file: `dist/goldenfile-${version}-py3-none-any.whl`,
+where `${version}` is the utility version.
+
+Installation example from distribution:
+
+```shell
+python3 -m pip install ./dist/goldenfile-0.0.0-py3-none-any.whl
+```
