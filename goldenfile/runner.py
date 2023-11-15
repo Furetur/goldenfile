@@ -34,6 +34,7 @@ def run_tests_in_shell(
         test_output_path = test_dir / (test.name + GENERATED_FILE_SUFFIX)
         test_stdout_path = test_dir / (test.name + STDOUT_SUFFIX)
         test_stderr_path = test_dir / (test.name + STDERR_SUFFIX)
+        assert test.input is not None, test.name
         run_command(
             cmd=command.make_command(input_path=test.input, output_path=test_output_path),
             stdout_path=test_stdout_path,

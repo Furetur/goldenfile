@@ -13,10 +13,10 @@ def _default_str_comparator(lhs: str, rhs: str) -> bool:
 
 
 def cmp_str(
-        lhs: str,
-        rhs: str,
-        *,
-        comparator: Callable[[str, str], Any] = _default_str_comparator,
+    lhs: str,
+    rhs: str,
+    *,
+    comparator: Callable[[str, str], Any] = _default_str_comparator,
 ) -> Any:
     return comparator(lhs, rhs)
 
@@ -172,3 +172,12 @@ def diff_dir(lhs: Path, rhs: Path, shallow: bool = True) -> str:
         diff_files.append(lhs, rhs)
 
     return str(diff_files)
+
+
+def cmp_whatever(lhs: Path, rhs: Path) -> bool:
+    if lhs.is_file() and rhs.is_file():
+        return cmp_file(lhs, rhs)
+    elif lhs.is_dir() and rhs.is_dir():
+        return cmp_dir(lhs, rhs)
+    else:
+        return False
