@@ -101,21 +101,6 @@ def cmp_dir(lhs: Path, rhs: Path, *, shallow: bool = True) -> bool:
     return difference_len == 0
 
 
-def _diff_dir(lhs: Path, rhs: Path) -> bool:
-    difference: dircmp = dircmp(lhs, rhs)
-
-    if difference.left_only or difference.right_only or difference.diff_files:
-        return False
-
-    for subdir in difference.common_dirs:
-        lhs_subdir: Path = Path(lhs, subdir)
-        rhs_subdir: Path = Path(rhs, subdir)
-        if not _cmp_dir(lhs_subdir, rhs_subdir):
-            return False
-
-    return True
-
-
 class DifferenceDirecoriesFilesStorage:
     def __init__(self):
         self.left_only: list[Path] = []
