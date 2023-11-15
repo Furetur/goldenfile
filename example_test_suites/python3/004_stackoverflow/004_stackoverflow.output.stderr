@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/furetur/projects/personal/goldenfile/example_test_suites/python3/004_stackoverflow/004_stackoverflow.input.py", line 5, in <module>
+    f(0)
+  File "/Users/furetur/projects/personal/goldenfile/example_test_suites/python3/004_stackoverflow/004_stackoverflow.input.py", line 3, in f
+    f(i + 1)
+  File "/Users/furetur/projects/personal/goldenfile/example_test_suites/python3/004_stackoverflow/004_stackoverflow.input.py", line 3, in f
+    f(i + 1)
+  File "/Users/furetur/projects/personal/goldenfile/example_test_suites/python3/004_stackoverflow/004_stackoverflow.input.py", line 3, in f
+    f(i + 1)
+  [Previous line repeated 995 more times]
+  File "/Users/furetur/projects/personal/goldenfile/example_test_suites/python3/004_stackoverflow/004_stackoverflow.input.py", line 2, in f
+    print(f"Recurse {i}")
+          ^^^^^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded while getting the str of an object

@@ -11,7 +11,7 @@ TMP_DIR = Path("temp")
 
 class ShellCommand(ABC):
     @abstractmethod
-    def make_command(self, *, input_path: Path, output: Path) -> Sequence[str]:
+    def make_command(self, *, input_path: Path, output_path: Path) -> Sequence[str]:
         ...
 
 
@@ -35,7 +35,7 @@ def run_tests_in_shell(
         test_stdout_path = test_dir / (test.name + STDOUT_SUFFIX)
         test_stderr_path = test_dir / (test.name + STDERR_SUFFIX)
         run_command(
-            cmd=command.make_command(input_path=test.input, output=test_output_path),
+            cmd=command.make_command(input_path=test.input, output_path=test_output_path),
             stdout_path=test_stdout_path,
             stderr_path=test_stderr_path,
         )
