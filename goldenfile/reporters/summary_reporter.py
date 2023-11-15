@@ -11,7 +11,7 @@ from termcolor import cprint, colored
 class SummaryReporter(BaseReporter):
     @staticmethod
     def show_diff(result: TestSuiteExecutionResult) -> None:
-        cprint("---------------", attrs=["bold"])
+        cprint("\n---------------", attrs=["bold"])
         cprint("Summary:\n", attrs=["bold"])
         SummaryReporter.print_passed_tests_colored(result)
         SummaryReporter.print_skipped_tests_colored(result)
@@ -19,4 +19,4 @@ class SummaryReporter(BaseReporter):
         SummaryReporter.print_summary_colored(result)
 
 
-unify_diff_reporter = SummaryReporter.show_diff
+summary_reporter = SummaryReporter.show_diff

@@ -1,9 +1,10 @@
 from pathlib import Path
 from typing import Sequence
 from goldenfile.checker import bytewise_checker
+from goldenfile.reporters.full_diff_reporter import full_diff_reporter
 from goldenfile.reporters.html_reporter import html_diff_reporter
 from goldenfile.reporters.replace_golden import replace_golden_reporter
-from goldenfile.reporters.summary_reporter import unify_diff_reporter
+from goldenfile.reporters.summary_reporter import summary_reporter
 from goldenfile.reporters.save_report import save_report
 from goldenfile.runner import ShellCommand, shell_runner
 from goldenfile.test_discoverers.simple_discoverer import simple_discoverer
@@ -28,9 +29,10 @@ python_pipeline = Pipeline(
     runner=shell_runner(Python3ShellCommand()),
     checker=bytewise_checker,
     reporters=[
-        unify_diff_reporter,
-        # html_diff_reporter,
-        # save_report(Path(".temp/report.json")),
+        full_diff_reporter,
+        summary_reporter,
+        html_diff_reporter,
+        save_report(Path(".temp/report.json")),
     ]
     + should_replace,
 )
