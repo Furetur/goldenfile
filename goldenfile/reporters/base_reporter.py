@@ -33,6 +33,6 @@ class BaseReporter(abc.ABC):
         skipped_str = colored(f"SKIPPED {len(result.skipped)}", color='yellow')
 
         cprint(
-            f"\nSummary: {passed_str} {failed_str} {skipped_str}",
+            f"\nTotal: {passed_str} {failed_str} {skipped_str}",
         )
 
