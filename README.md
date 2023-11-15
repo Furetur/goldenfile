@@ -147,7 +147,7 @@ Building the distribution package:
 poetry build
 ```
 
-Built distribution is located in the file: `dist/goldenfile-${version}-py3-none-any.whl`,
+Distribution is located in the file: `dist/goldenfile-${version}-py3-none-any.whl`,
 where `${version}` is the utility version.
 
 Installation example from distribution:
