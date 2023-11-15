@@ -148,3 +148,5 @@ _minted-presentation/
 .vscode
 failed_tests_diffs.html
 .temp/
+
+/dist
