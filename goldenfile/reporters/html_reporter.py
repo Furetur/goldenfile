@@ -42,12 +42,12 @@ class HtmlDiffReporter(BaseReporter):
                 result_html += d
 
         print(_HTML_HEADER + result_html + _HTML_BOTTOM, file=open("failed_tests_diffs.html", "w"))
-        HtmlDiffReporter.print_passed_tests_colored(result)
-        HtmlDiffReporter.print_skipped_tests_colored(result)
-        HtmlDiffReporter.print_failed_tests_colored(result)
+        # HtmlDiffReporter.print_passed_tests_colored(result)
+        # HtmlDiffReporter.print_skipped_tests_colored(result)
+        # HtmlDiffReporter.print_failed_tests_colored(result)
 
         print("See diff in html at failed_tests_diffs.html")
-        HtmlDiffReporter.print_summary_colored(result)
+        # HtmlDiffReporter.print_summary_colored(result)
 
     @staticmethod
     def _html_diff_table(golden_path, actual_path):

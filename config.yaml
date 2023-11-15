@@ -1,0 +1,9 @@
+test_suite_path: /path/to/test/suite
+reporters: [diff, html]
+
+pipelines:
+  - tags: [windows, linux]
+    cmd: clang {inputfile} -o {outputfile}
+  - tags: [macos]
+    cmd: g++ {inputfile} -o {outputfile}
+

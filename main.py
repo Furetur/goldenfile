@@ -19,16 +19,21 @@ should_replace = [ReplaceGoldenReporter] if options.replace else []
 
 
 class Python3ShellCommand(ShellCommand):
-    def make_command(self, *, input_path: Path, output: Path) -> Sequence[str]:
-        return ["python3", str(input_path)]
+    def make_command(self, *, input_path: Path, output_path: Path) -> Sequence[str]:
+        return ["python3", str(input_path), str(output_path)]
 
 
-pipeline = Pipeline(
+python_pipeline = Pipeline(
     test_discoverer=simple_discoverer,
     runner=shell_runner(Python3ShellCommand()),
     checker=bytewise_checker,
-    reporters=[UnifyDiffReporter, HtmlDiffReporter, save_report(Path("temp/report.json"))] + should_replace
+    reporters=[
+        UnifyDiffReporter,
+        HtmlDiffReporter,
+        save_report(Path(".temp/report.json")),
+    ]
+    + should_replace,
 )
 
-if __name__ == '__main__':
-    pipeline.run(Path("example"))
+if __name__ == "__main__":
+    python_pipeline.run(Path("example_test_suites/python3"))
